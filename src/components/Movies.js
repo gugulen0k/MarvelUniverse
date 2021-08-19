@@ -3,7 +3,7 @@ import Card from "./Card.js";
 import styled from "styled-components";
 
 const MovieList = styled.div`
-  margin: 0 20px;
+  margin: 0 100px;
   display: grid;
   gap: 50px;
   place-items: center;
@@ -11,15 +11,22 @@ const MovieList = styled.div`
   grid-template-columns: repeat(3, minmax(0, 1fr));
 `;
 
-function Movies() {
+function Movies({ movieList }) {
   return (
     <MovieList>
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
+      {movieList.map((movie) => {
+        return (
+          <Card
+            key={movie.id}
+            title={movie.title}
+            cover={movie.cover}
+            duration={movie.duration}
+            overview={movie.overview}
+            trailer={movie.trailer}
+            release_date={movie.release_date}
+          ></Card>
+        );
+      })}
     </MovieList>
   );
 }

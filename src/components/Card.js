@@ -3,6 +3,7 @@ import styled, { keyframes } from "styled-components";
 import play_button from "../images/play_button.svg";
 
 const Info = styled.div`
+  width: 100%;
   display: none;
   flex-direction: column;
   padding: 20px;
@@ -35,10 +36,9 @@ const dropDown = keyframes`
 const MovieCard = styled.div`
   font-family: Prompt;
   color: white;
-  width: 500px;
+  width: 340px;
   height: 500px;
-  background: url("https://raw.githubusercontent.com/AugustoMarcelo/mcuapi/master/covers/spider-man-no-way-home.jpg")
-    no-repeat;
+  background: url(${(props) => props.coverImage}) no-repeat;
   background-position: center;
   background-size: cover;
   border: 1px solid #26282d;
@@ -50,7 +50,8 @@ const MovieCard = styled.div`
   transition: 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
   &:hover {
-    transform: scale(1.1);
+    /* transform: scale(1.1); */
+    width: 500px;
   }
 
   &:hover ${Info} {
@@ -63,7 +64,7 @@ const MovieCard = styled.div`
   &:not(:hover) ${Info} {
     display: flex;
     animation-name: ${dropDown};
-    animation-duration: 1s;
+    animation-duration: 0.1s;
     animation-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
     animation-fill-mode: both;
   }
@@ -147,23 +148,36 @@ const ReadMoreButton = styled.button`
   }
 `;
 
-function Card() {
+const Link = styled.a`
+  text-decoration: none;
+  color: white;
+`;
+
+function Card({ title, cover, trailer, overview, duration, release_date }) {
   return (
-    <MovieCard>
+    <MovieCard coverImage={cover}>
       <Info>
-        <Title>Spider-Man: No Way Home</Title>
+        <Title>{title}</Title>
         <Highlights>
-          <Year>2021</Year>
-          <Duration>129min</Duration>
-          <Trailer>
-            <PlayButton src={play_button} />
-            TRAILER
-          </Trailer>
+          <Year>
+            {release_date === null
+              ? "date unknown"
+              : release_date.split("-").reverse().join(".")}
+          </Year>
+          <Duration>{duration} min</Duration>
+          {trailer === null ? (
+            ""
+          ) : (
+            <Link href={trailer}>
+              <Trailer>
+                <PlayButton src={play_button} />
+                TRAILER
+              </Trailer>
+            </Link>
+          )}
         </Highlights>
         <Description>
-          Marvel Studios' Eternals features an exciting new team of Super Heroes
-          in the Marvel Cinematic Universe, ancient aliens who have been living
-          on Earth in secret for thousands...
+          {overview === null ? "no description" : overview.slice(0, 150)}...
         </Description>
         <ReadMoreButton>READ MORE</ReadMoreButton>
       </Info>
