@@ -1,3 +1,9 @@
+## Used libraries
+
+1. styled-components (Creating styled HTML tags)
+2. blueimp-md5 (Creating hash from the string)
+3. hamburger-react (Simple hamburger)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
