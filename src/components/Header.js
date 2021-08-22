@@ -62,9 +62,9 @@ const MenuItem = styled.li`
     height: 100%;
     z-index: -1;
     opacity: 0;
-    transform: translateX(-50px) skew(0deg);
 
     background: rgba(255, 0, 67, 1);
+    transform: skew(-5deg);
 
     transition: 500ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
   }
@@ -80,22 +80,20 @@ const MenuItem = styled.li`
     z-index: -1;
 
     opacity: 0;
-    transform: translateX(50px) skew(0deg);
 
     background: rgba(255, 0, 67, 1);
+    transform: skew(5deg);
 
     transition: 500ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
   }
 
   &:hover::before {
     content: "";
-    transform: translateX(0px) skew(-5deg);
     opacity: 1;
   }
 
   &:hover::after {
     content: "";
-    transform: translateX(0px) skew(5deg);
     opacity: 1;
   }
 
@@ -117,7 +115,7 @@ const MobileMenu = styled.div`
   position: relative;
   margin-bottom: 50px;
 
-  @media only screen and (max-width: 325px) {
+  @media (min-width: 1024px) {
     display: none;
   }
 `;
@@ -125,8 +123,44 @@ const MobileMenu = styled.div`
 const HamburgerBox = styled.div`
   position: absolute;
   right: 10px;
-  top: 0;
+  top: 20px;
+  z-index: 11;
 `;
+
+const MobileLogo = styled.div`
+  margin: 20px;
+`;
+
+const HamburgerMobileMenu = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 100vh;
+  width: 100%;
+
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 10;
+
+  background: #191a1d;
+  pointer-events: all;
+
+  transform: ${(props) =>
+    props.isOpen ? "translateX: (0)" : "translateX(-100%)"};
+  transition: 500ms cubic-bezier(0, 0, 0, 1);
+`;
+
+const MobileUl = styled.ul`
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+`;
+
+// ------------------------------------------------------------------
 
 function Header() {
   const linkStyle = {
@@ -158,7 +192,9 @@ function Header() {
       </HeaderMenu>
       <MobileMenu>
         <Link to="/">
-          <Logo src={marvel_logo} />
+          <MobileLogo>
+            <Logo src={marvel_logo} />
+          </MobileLogo>
         </Link>
         <HamburgerBox>
           <Hamburger
@@ -170,6 +206,22 @@ function Header() {
             style={{ position: "absolute !important" }}
           />
         </HamburgerBox>
+        <HamburgerMobileMenu isOpen={isOpen}>
+          <MobileUl>
+            <Link to="/comics" style={linkStyle}>
+              <MenuItem>Comics</MenuItem>
+            </Link>
+            <Link to="/movies" style={linkStyle}>
+              <MenuItem>Movies</MenuItem>
+            </Link>
+            <Link to="/tv_shows" style={linkStyle}>
+              <MenuItem>TV shows</MenuItem>
+            </Link>
+            <Link to="/characters" style={linkStyle}>
+              <MenuItem>Characters</MenuItem>
+            </Link>
+          </MobileUl>
+        </HamburgerMobileMenu>
       </MobileMenu>
     </div>
   );
