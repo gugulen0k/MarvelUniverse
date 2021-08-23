@@ -18,6 +18,10 @@ const MovieList = styled.div`
   @media (max-width: 1100px) {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
+
+  @media (max-width: 1024px) {
+    margin-top: 150px;
+  }
 `;
 
 function Movies() {

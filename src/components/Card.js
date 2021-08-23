@@ -36,38 +36,65 @@ const dropDown = keyframes`
 const MovieCard = styled.div`
   font-family: Prompt;
   color: white;
-  width: 340px;
-  height: 500px;
+
+  width: 200px;
+  background: red;
+  height: 300px;
+
   background: url(${(props) => props.coverImage}) no-repeat;
   background-position: center;
   background-size: cover;
+
   border: 1px solid #26282d;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
   border-radius: 30px;
   overflow: hidden;
+
   display: flex;
   align-items: flex-end;
+
   transition: 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
   &:hover {
-    /* transform: scale(1.1); */
-    width: 500px;
+    transform: scale(1.25);
   }
 
-  &:hover ${Info} {
-    display: flex;
-    animation-name: ${dropUp};
-    animation-duration: 1s;
-    animation-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
-    animation-fill-mode: both;
+  @media (min-width: 600px) {
+    width: 240px;
+    background: blue;
+    height: 400px;
+
+    &:hover {
+      transform: scale(1.05);
+      width: 200px;
+      background: white;
+    }
   }
-  &:not(:hover) ${Info} {
-    display: flex;
-    animation-name: ${dropDown};
-    animation-duration: 0.1s;
-    animation-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
-    animation-fill-mode: both;
-  }
+  /*
+  @media (max-width: 1024px) {
+    width: 340px;
+    height: 500px;
+
+    &:hover {
+      transform: scale(1.1);
+      width: 500px;
+    }
+
+    &:hover ${Info} {
+      display: flex;
+      animation-name: ${dropUp};
+      animation-duration: 1s;
+      animation-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+      animation-fill-mode: both;
+    }
+    &:not(:hover) ${Info} {
+      display: flex;
+      animation-name: ${dropDown};
+      animation-duration: 0.1s;
+      animation-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+      animation-fill-mode: both;
+    }
+  } */
 `;
 
 const Title = styled.div`
@@ -75,6 +102,10 @@ const Title = styled.div`
   font-size: 1.8rem;
   font-weight: bold;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+  }
 `;
 
 const Highlights = styled.div`
@@ -93,6 +124,10 @@ const Year = styled.div`
   background: rgba(25, 26, 29, 0.5);
   border: 1px solid rgba(255, 0, 67, 0.8);
   border-radius: 5px;
+
+  @media (max-width: 600px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const Duration = styled.div`
@@ -105,6 +140,10 @@ const Duration = styled.div`
   background: rgba(25, 26, 29, 0.5);
   border: 1px solid rgba(255, 0, 67, 0.8);
   border-radius: 5px;
+
+  @media (max-width: 600px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const Trailer = styled.div`
@@ -117,10 +156,15 @@ const Trailer = styled.div`
   background: rgba(25, 26, 29, 0.5);
   border: 1px solid rgba(255, 0, 67, 0.8);
   border-radius: 5px;
+
+  @media (max-width: 600px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const PlayButton = styled.img`
   margin-right: 10px;
+  width: 10px;
 `;
 
 const Description = styled.div`
@@ -128,6 +172,10 @@ const Description = styled.div`
   margin-top: 10px;
   font-size: 1.2rem;
   text-align: justify;
+
+  @media (max-width: 600px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const ReadMoreButton = styled.button`

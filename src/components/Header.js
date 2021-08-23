@@ -112,8 +112,17 @@ const MobileMenu = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
+  background: #191a1d;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 200;
+
   margin-bottom: 50px;
+  width: 100%;
 
   @media (min-width: 1024px) {
     display: none;
@@ -121,7 +130,7 @@ const MobileMenu = styled.div`
 `;
 
 const HamburgerBox = styled.div`
-  position: absolute;
+  position: fixed;
   right: 10px;
   top: 20px;
   z-index: 11;
@@ -139,7 +148,7 @@ const HamburgerMobileMenu = styled.div`
   height: 100vh;
   width: 100%;
 
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   z-index: 10;
@@ -199,11 +208,10 @@ function Header() {
         <HamburgerBox>
           <Hamburger
             color="white"
-            hideOutline={false}
+            hideOutline={true}
             duration={0.5}
             toggled={isOpen}
             toggle={setOpen}
-            style={{ position: "absolute !important" }}
           />
         </HamburgerBox>
         <HamburgerMobileMenu isOpen={isOpen}>
