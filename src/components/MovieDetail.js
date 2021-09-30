@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
+import GoToTop from "../GoToTop.js";
 
 // Libraries
 import Carousel, {
@@ -8,6 +9,7 @@ import Carousel, {
   slidesToShowPlugin,
 } from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
+import ReactPlayer from "react-player";
 
 // Images
 import trailer_image from "../images/trailer.svg";
@@ -139,7 +141,7 @@ const Person = styled.div`
   background-color: rgba(255, 255, 255, 0.15);
   border-radius: 20px;
 
-  padding: 20px;
+  overflow: hidden;
 
   height: 600px;
   width: 400px;
@@ -178,11 +180,10 @@ const ActorData = styled.div`
   flex-direction: column;
 
   width: 100%;
-  padding: 10px 15px;
+  padding: 25px 20px;
 
-  border-radius: 10px;
-  background: rgba(25, 26, 29, 0.7);
-  backdrop-filter: blur(10px);
+  background: rgba(25, 26, 29, 1);
+  /* backdrop-filter: blur(10px); */
 
   font-size: 1.3rem;
   text-decoration: italic;
@@ -223,7 +224,7 @@ const ReviewBackground = styled.div`
   margin: 30px 0;
   padding: 30px;
 
-  word-wrap: wrap;
+  width: 100%;
 
   background: rgba(255, 255, 255, 0.15);
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
@@ -281,6 +282,25 @@ const Comment = styled.span`
 const ReviewTextBox = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const TrailerPlayer = styled.div`
+  border-radius: 30px;
+
+  overflow: hidden;
+
+  width: 85%;
+  height: 700px;
+`;
+
+const NoReviews = styled(ReviewBackground)`
+  width: 100%;
+  text-align: center;
+`;
+
+const NoTrailerImage = styled.img`
+  width: 100%;
+  height: 100%;
 `;
 
 const checkRate = (movie_rate) => {
@@ -413,32 +433,48 @@ const MovieDetail = ({
         </CustomizedCarousel>
 
         <Header>Trailer</Header>
-        <img src={trailer_image} alt="" />
+        <TrailerPlayer>
+          {trailer === false ? (
+            <ReactPlayer
+              width="100%"
+              height="100%"
+              controls={true}
+              url="https://www.youtube.com/watch?v=Jox6R5-rIH0&list=PLdGJJ6BBahVodCt3Cet2bDmDSiRVJoE5G&ab_channel=MG1010"
+            />
+          ) : (
+            <NoTrailerImage src={trailer_image} alt="" />
+          )}
+        </TrailerPlayer>
 
         <Header>Reviews</Header>
-        <Reviews>
-          {reviews.map(({ user, review }) => {
-            return (
-              <ReviewBox>
-                <UserLogoBackground>
-                  <UserLogo src={default_user} alt="" />
-                </UserLogoBackground>
-                <ReviewBackground>
-                  <UserReview>
-                    <UserName>{user}</UserName>
-                    <div>
-                      <ReviewTextBox>
-                        <Comment>Comment:</Comment>
-                        <ReviewText>{review}</ReviewText>
-                      </ReviewTextBox>
-                    </div>
-                  </UserReview>
-                </ReviewBackground>
-              </ReviewBox>
-            );
-          })}
-        </Reviews>
+        {reviews.length === 0 ? (
+          <NoReviews>No reviews.</NoReviews>
+        ) : (
+          <Reviews>
+            {reviews.map(({ user, review }) => {
+              return (
+                <ReviewBox>
+                  <UserLogoBackground>
+                    <UserLogo src={default_user} alt="" />
+                  </UserLogoBackground>
+                  <ReviewBackground>
+                    <UserReview>
+                      <UserName>{user}</UserName>
+                      <div>
+                        <ReviewTextBox>
+                          <Comment>Comment:</Comment>
+                          <ReviewText>{review}</ReviewText>
+                        </ReviewTextBox>
+                      </div>
+                    </UserReview>
+                  </ReviewBackground>
+                </ReviewBox>
+              );
+            })}
+          </Reviews>
+        )}
       </MovieData>
+      <GoToTop />
     </MoviePage>
   );
 };
