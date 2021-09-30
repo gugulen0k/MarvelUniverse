@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 import play_button from "../images/play_button.svg";
+import { Link } from "react-router-dom";
 
 const Info = styled.div`
   width: 100%;
@@ -8,6 +9,10 @@ const Info = styled.div`
   flex-direction: column;
   padding: 20px;
   background: linear-gradient(180deg, rgba(25, 26, 29, 0) 0%, #191a1d 25%);
+
+  @media (min-width: 600px) {
+    width: 100%;
+  } ;
 `;
 
 const dropUp = keyframes`
@@ -34,15 +39,13 @@ const dropDown = keyframes`
 `;
 
 const MovieCard = styled.div`
-  font-family: Prompt;
+  font-family: Prompt, serif;
   color: white;
 
   width: 200px;
-  background: red;
   height: 300px;
 
-  background: url(${(props) => props.coverImage}) no-repeat;
-  background-position: center;
+  background: url(${(props) => props.coverImage}) no-repeat center;
   background-size: cover;
 
   border: 1px solid #26282d;
@@ -61,17 +64,30 @@ const MovieCard = styled.div`
 
   @media (min-width: 600px) {
     width: 240px;
-    background: blue;
     height: 400px;
 
     &:hover {
       transform: scale(1.05);
-      width: 200px;
-      background: white;
+      width: 500px;
+    }
+
+    &:hover ${Info} {
+      display: flex;
+      animation-name: ${dropUp};
+      animation-duration: 1s;
+      animation-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+      animation-fill-mode: both;
+    }
+    &:not(:hover) ${Info} {
+      display: flex;
+      animation-name: ${dropDown};
+      animation-duration: 0.1s;
+      animation-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+      animation-fill-mode: both;
     }
   }
-  /*
-  @media (max-width: 1024px) {
+
+  @media (min-width: 1024px) {
     width: 340px;
     height: 500px;
 
@@ -94,7 +110,7 @@ const MovieCard = styled.div`
       animation-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
       animation-fill-mode: both;
     }
-  } */
+  }
 `;
 
 const Title = styled.div`
@@ -178,7 +194,9 @@ const Description = styled.div`
   }
 `;
 
-const ReadMoreButton = styled.button`
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  text-align: center;
   cursor: pointer;
   border: 1px solid #ff0043;
   margin-top: 15px;
@@ -196,12 +214,19 @@ const ReadMoreButton = styled.button`
   }
 `;
 
-const Link = styled.a`
-  text-decoration: none;
-  color: white;
-`;
-
-function Card({ title, cover, trailer, overview, duration, release_date }) {
+const Card = ({
+  id,
+  title,
+  cover,
+  trailer,
+  overview,
+  duration,
+  release_date,
+  rate,
+  cast,
+  reviews,
+}) => {
+  console.log(trailer);
   return (
     <MovieCard coverImage={cover}>
       <Info>
@@ -212,25 +237,44 @@ function Card({ title, cover, trailer, overview, duration, release_date }) {
               ? "date unknown"
               : release_date.split("-").reverse().join(".")}
           </Year>
-          <Duration>{duration} min</Duration>
-          {trailer === null ? (
+          <Duration>
+            {Math.floor(duration / 60)}h. {duration % 60} min.
+          </Duration>
+          {trailer === false ? (
             ""
           ) : (
-            <Link href={trailer}>
-              <Trailer>
-                <PlayButton src={play_button} />
-                TRAILER
-              </Trailer>
-            </Link>
+            <Trailer>
+              <PlayButton src={play_button} />
+              TRAILER
+            </Trailer>
           )}
         </Highlights>
         <Description>
           {overview === null ? "no description" : overview.slice(0, 150)}...
         </Description>
-        <ReadMoreButton>READ MORE</ReadMoreButton>
+
+        <StyledLink
+          to={{
+            pathname: `/movies/${id}`,
+            state: {
+              id,
+              title,
+              cover,
+              trailer,
+              overview,
+              duration,
+              release_date,
+              rate,
+              cast,
+              reviews,
+            },
+          }}
+        >
+          <span>READ MORE</span>
+        </StyledLink>
       </Info>
     </MovieCard>
   );
-}
+};
 
 export default Card;

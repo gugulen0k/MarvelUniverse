@@ -1,8 +1,10 @@
 ## Used libraries
 
-1. styled-components (Creating styled HTML tags)
-2. blueimp-md5 (Creating hash from the string)
-3. hamburger-react (Simple hamburger)
+1. `styled-components` (Creating styled HTML tags)
+2. `blueimp-md5` (Creating hash from the string)
+3. `hamburger-react` (Simple hamburger)
+4. `react-preloader` (Simple preloader)
+5. `@brainhubeu/react-carousel` (slider carousel)
 
 # Getting Started with Create React App
 

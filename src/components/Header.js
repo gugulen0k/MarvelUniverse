@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
@@ -38,7 +38,7 @@ const Menu = styled.ul`
 const MenuItem = styled.li`
   list-style-type: none;
   padding: 10px;
-  font-family: Bangers;
+  font-family: Bangers, serif;
   font-size: 2rem;
   color: white;
   cursor: pointer;
@@ -105,7 +105,6 @@ const MenuItem = styled.li`
 const Logo = styled.img`
   width: 130px;
   height: 50px;
-  cursor: pointer;
 `;
 
 const MobileMenu = styled.div`
@@ -171,20 +170,30 @@ const MobileUl = styled.ul`
 
 // ------------------------------------------------------------------
 
-function Header() {
+
+const Header = () => {
   const linkStyle = {
     "text-decoration": "none",
   };
 
+  const logoLinkStyle = {
+    'left': '0px'
+  };
+
   const [isOpen, setOpen] = useState(false);
+
+  const selected = () => {
+    setOpen(!isOpen);
+  }
 
   return (
     <div>
       <HeaderMenu>
-        <Link to="/">
-          <Logo src={marvel_logo} />
-        </Link>
+        <Logo src={marvel_logo} />
         <Menu>
+          <Link style={linkStyle} to="/">
+            <MenuItem>Home</MenuItem>
+          </Link>
           <Link to="/comics" style={linkStyle}>
             <MenuItem>Comics</MenuItem>
           </Link>
@@ -217,16 +226,16 @@ function Header() {
         <HamburgerMobileMenu isOpen={isOpen}>
           <MobileUl>
             <Link to="/comics" style={linkStyle}>
-              <MenuItem>Comics</MenuItem>
+              <MenuItem onClick={selected}>Comics</MenuItem>
             </Link>
             <Link to="/movies" style={linkStyle}>
-              <MenuItem>Movies</MenuItem>
+              <MenuItem onClick={selected}>Movies</MenuItem>
             </Link>
             <Link to="/tv_shows" style={linkStyle}>
-              <MenuItem>TV shows</MenuItem>
+              <MenuItem onClick={selected}>TV shows</MenuItem>
             </Link>
             <Link to="/characters" style={linkStyle}>
-              <MenuItem>Characters</MenuItem>
+              <MenuItem onClick={selected}>Characters</MenuItem>
             </Link>
           </MobileUl>
         </HamburgerMobileMenu>
