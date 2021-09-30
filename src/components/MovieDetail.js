@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 
+// Libraries
 import Carousel, {
   arrowsPlugin,
   slidesToScrollPlugin,
@@ -8,6 +9,8 @@ import Carousel, {
 } from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
 
+// Images
+import trailer_image from "../images/trailer.svg";
 import default_user from "../images/user.svg";
 import play_button from "../images/play_button.svg";
 import one_star from "../images/stars/stars1.svg";
@@ -69,7 +72,7 @@ const Data = styled.div`
 const Title = styled.span`
   color: white;
   font-weight: bold;
-  font-size: 3rem;
+  font-size: 4rem;
 `;
 
 const Overview = styled.p`
@@ -127,6 +130,9 @@ const Rate = styled.img`
 `;
 
 const Person = styled.div`
+  display: flex;
+  align-items: flex-end;
+
   background: url(${({ personImage }) => personImage}) no-repeat center;
   background-size: cover;
 
@@ -135,7 +141,7 @@ const Person = styled.div`
 
   padding: 20px;
 
-  height: 400px;
+  height: 600px;
   width: 400px;
 `;
 
@@ -161,9 +167,9 @@ const LeftImage = styled.img`
 `;
 
 const Header = styled.span`
-  font-size: 2rem;
+  font-size: 3rem;
   font-weight: bold;
-  margin-top: 50px;
+  margin-top: 200px;
   margin-bottom: 20px;
 `;
 
@@ -171,7 +177,14 @@ const ActorData = styled.div`
   display: flex;
   flex-direction: column;
 
-  font-size: 1.3;
+  width: 100%;
+  padding: 10px 15px;
+
+  border-radius: 10px;
+  background: rgba(25, 26, 29, 0.7);
+  backdrop-filter: blur(10px);
+
+  font-size: 1.3rem;
   text-decoration: italic;
 `;
 
@@ -188,6 +201,88 @@ const ActorDataLineHeader = styled.span`
   font-weight: bold;
 `;
 
+const CustomizedCarousel = styled(Carousel)`
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+
+  padding: 20px;
+`;
+
+const Reviews = styled.div`
+  width: 100%;
+  height: max-content;
+`;
+
+const ReviewBox = styled.div`
+  position: relative;
+
+  padding: 20px 0;
+`;
+
+const ReviewBackground = styled.div`
+  margin: 30px 0;
+  padding: 30px;
+
+  word-wrap: wrap;
+
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 30px;
+`;
+
+const UserReview = styled.div`
+  display: grid;
+  grid-template-rows: 50px 1fr;
+`;
+
+const UserLogo = styled.img`
+  width: 50px;
+`;
+
+const UserLogoBackground = styled.div`
+  background: #4d4d4d;
+  border: 7px solid #191a1d;
+
+  overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  top: 0;
+  left: 50px;
+  z-index: 10;
+
+  width: 100px;
+  height: 100px;
+
+  border-radius: 50%;
+`;
+
+const UserName = styled.span`
+  font-style: italic;
+  font-weight: bold;
+  font-size: 1.3rem;
+
+  justify-self: end;
+`;
+
+const ReviewText = styled.span`
+  font-size: 1.4rem;
+`;
+
+const Comment = styled.span`
+  opacity: 0.5;
+  font-size: 1.3rem;
+  font-weight: bold;
+`;
+
+const ReviewTextBox = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const checkRate = (movie_rate) => {
   if (movie_rate === 1) return one_star;
   else if (movie_rate === 2) return two_stars;
@@ -196,6 +291,56 @@ const checkRate = (movie_rate) => {
   else if (movie_rate === 5) return five_stars;
   else return no_stars;
 };
+
+const carouselSettings = [
+  "centered",
+  {
+    resolve: arrowsPlugin,
+    options: {
+      arrowLeft: (
+        <SliderButton>
+          <LeftImage src={play_button} alt="" />
+        </SliderButton>
+      ),
+      arrowLeftDisabled: (
+        <SliderButton>
+          <LeftImage
+            style={{ filter: "opacity(0.5)" }}
+            src={play_button}
+            alt=""
+          />
+        </SliderButton>
+      ),
+      arrowRight: (
+        <SliderButton>
+          <RightImage src={play_button} alt="" />
+        </SliderButton>
+      ),
+      arrowRightDisabled: (
+        <SliderButton>
+          <RightImage
+            style={{ filter: "opacity(0.5)" }}
+            src={play_button}
+            alt=""
+          />
+        </SliderButton>
+      ),
+      addArrowClickHandler: true,
+    },
+  },
+  {
+    resolve: slidesToShowPlugin,
+    options: {
+      numberOfSlides: 3,
+    },
+  },
+  {
+    resolve: slidesToScrollPlugin,
+    options: {
+      numberOfSlides: 1,
+    },
+  },
+];
 
 const MovieDetail = ({
   location: {
@@ -238,57 +383,7 @@ const MovieDetail = ({
         </MainDetails>
 
         <Header>Cast</Header>
-        <Carousel
-          plugins={[
-            "centered",
-            {
-              resolve: arrowsPlugin,
-              options: {
-                arrowLeft: (
-                  <SliderButton>
-                    <LeftImage src={play_button} alt="" />
-                  </SliderButton>
-                ),
-                arrowLeftDisabled: (
-                  <SliderButton>
-                    <LeftImage
-                      style={{ filter: "opacity(0.5)" }}
-                      src={play_button}
-                      alt=""
-                    />
-                  </SliderButton>
-                ),
-                arrowRight: (
-                  <SliderButton>
-                    <RightImage src={play_button} alt="" />
-                  </SliderButton>
-                ),
-                arrowRightDisabled: (
-                  <SliderButton>
-                    <RightImage
-                      style={{ filter: "opacity(0.5)" }}
-                      src={play_button}
-                      alt=""
-                    />
-                  </SliderButton>
-                ),
-                addArrowClickHandler: true,
-              },
-            },
-            {
-              resolve: slidesToShowPlugin,
-              options: {
-                numberOfSlides: 2,
-              },
-            },
-            {
-              resolve: slidesToScrollPlugin,
-              options: {
-                numberOfSlides: 1,
-              },
-            },
-          ]}
-        >
+        <CustomizedCarousel plugins={carouselSettings}>
           {cast.map(({ full_name, born, country, city }) => {
             return (
               <Person personImage={cover}>
@@ -315,9 +410,34 @@ const MovieDetail = ({
               </Person>
             );
           })}
-        </Carousel>
+        </CustomizedCarousel>
 
         <Header>Trailer</Header>
+        <img src={trailer_image} alt="" />
+
+        <Header>Reviews</Header>
+        <Reviews>
+          {reviews.map(({ user, review }) => {
+            return (
+              <ReviewBox>
+                <UserLogoBackground>
+                  <UserLogo src={default_user} alt="" />
+                </UserLogoBackground>
+                <ReviewBackground>
+                  <UserReview>
+                    <UserName>{user}</UserName>
+                    <div>
+                      <ReviewTextBox>
+                        <Comment>Comment:</Comment>
+                        <ReviewText>{review}</ReviewText>
+                      </ReviewTextBox>
+                    </div>
+                  </UserReview>
+                </ReviewBackground>
+              </ReviewBox>
+            );
+          })}
+        </Reviews>
       </MovieData>
     </MoviePage>
   );
